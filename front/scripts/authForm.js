@@ -43,7 +43,7 @@ class AuthForm {
     const dataObj = Object.fromEntries(data)
 
     if (dataObj.password === dataObj.passwordRepeat) {
-      fetch("http://localhost:3000",
+      fetch("http://localhost:3000/api/register",
           {
             method: "POST",
             headers: {

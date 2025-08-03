@@ -105,6 +105,42 @@ app.post('/api/register', (req, res) => {
     });
 });
 
+app.post('/api/login', (req, res) => {
+    const { login, password } = req.body;
+
+    if (!login || !password) {
+        return res.status(400).send('Логин и пароль обязательны');
+    }
+
+    const sql = 'SELECT * FROM users WHERE login = ?';
+    db.query(sql, [login], (err, results) => {
+        if (err) {
+            console.error('Ошибка при запросе пользователя:', err);
+            return res.status(500).send('Ошибка на стороне сервера');
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send('Пользователь не найден');
+        }
+
+        const user = results[0];
+
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+            if (err) {
+                console.error('Ошибка при сравнении паролей:', err);
+                return res.status(500).send('Ошибка при проверке пароля');
+            }
+
+            if (!isMatch) {
+                return res.status(401).send('Неверный пароль');
+            }
+
+            console.log('✅ Авторизация прошла успешно');
+            res.status(200).send('Авторизация прошла успешно');
+        });
+    });
+});
+
 // --- Запуск сервера ---
 app.listen(PORT, () => {
     console.log(`Сервер запущен на порту ${PORT}`);
