@@ -1,4 +1,17 @@
 {
+<<<<<<< Updated upstream
+=======
+  "dependencies": {
+<<<<<<< HEAD
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "mysql": "^2.18.1"
+=======
+    "express": "^5.1.0",
+    "sass": "^1.89.2"
+>>>>>>> c137942 (add front)
+  },
+>>>>>>> Stashed changes
   "name": "abchihba",
   "version": "1.0.0",
   "main": "script.js",
