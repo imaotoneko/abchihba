@@ -1,36 +1,39 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const mysql = require('mysql'); // Добавляем модуль для работы с MySQL
-const bcrypt = require('bcryptjs'); // Добавляем модуль для хеширования паролей
+const mysql = require('mysql'); // Модуль для работы с MySQL
+const bcrypt = require('bcryptjs'); // Модуль для хеширования паролей
 
 const app = express();
 const PORT = 3000;
 
-// --- Настройка подключения к базе данных MySQL ---
-// Замените на ваши реальные данные для подключения
-const db = mysql.createConnection({
-    host: 'localhost', // или IP-адрес вашего сервера БД
-    user: 'your_username', // ваше имя пользователя в MySQL
-    password: 'your_password', // ваш пароль в MySQL
-    database: 'your_database' // название вашей базы данных
+// --- Настройка подключения к базе данных через Pool ---
+const db = mysql.createPool({
+  connectionLimit: 10,
+  host: 'localhost',
+  user: 'nodeuser',  // или admin, если починил
+  password: '1234',
+  database: 'queueRegistration'
 });
 
-// Подключаемся к базе данных
-db.connect((err) => {
+// --- Маршрут для пинга БД ---
+app.get('/api/ping-db', (req, res) => {
+  db.query('SELECT 1', (err) => {
     if (err) {
-        console.error('Ошибка подключения к базе данных:', err);
-        return;
+      console.error('Ошибка подключения к БД:', err);
+      return res.status(500).send('БД недоступна');
     }
-    console.log('Успешное подключение к базе данных MySQL!');
+    console.log('✅ Пинг прошёл: подключение есть');
+    res.send('БД подключена');
+  });
 });
 
 // --- Middleware ---
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json()); // Для парсинга JSON-тела запроса
-app.use(express.urlencoded({ extended: true })); // Для парсинга данных из HTML-форм
+app.use(express.json()); // Для JSON-тел
+app.use(express.urlencoded({ extended: true })); // Для form-urlencoded
 
-// --- Маршруты для работы с очередью (старый код) ---
+// --- Маршруты для работы с очередью (старый код на JSON-файле) ---
 
 // Получить всю очередь
 app.get('/api/orders', (req, res) => {
@@ -71,8 +74,7 @@ app.delete('/api/orders/:index', (req, res) => {
     });
 });
 
-
-// --- НОВЫЙ МАРШРУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ ---
+// --- Маршрут для регистрации пользователя ---
 app.post('/api/register', (req, res) => {
     const { login, password } = req.body;
 
@@ -91,7 +93,6 @@ app.post('/api/register', (req, res) => {
 
         db.query(sql, newUser, (err, result) => {
             if (err) {
-                // Проверяем, не является ли ошибка дубликатом логина
                 if (err.code === 'ER_DUP_ENTRY') {
                     return res.status(409).send('Пользователь с таким логином уже существует');
                 }
@@ -103,7 +104,6 @@ app.post('/api/register', (req, res) => {
         });
     });
 });
-
 
 // --- Запуск сервера ---
 app.listen(PORT, () => {
