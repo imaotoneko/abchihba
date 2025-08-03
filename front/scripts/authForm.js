@@ -39,17 +39,18 @@ class AuthForm {
 
   submitRegister(event) {
     const formRegisterElement = document.querySelector(this.selectors.registerData)
-    const data = new FormData(formRegisterElement)
-    const dataObj = Object.fromEntries(data)
+    const datas = new FormData(formRegisterElement)
+    const dataObjReg = Object.fromEntries(datas)
+    console.log(dataObjReg)
 
-    if (dataObj.password === dataObj.passwordRepeat) {
-      fetch("http://localhost:3000/api/register",
+    if (dataObjReg.password === dataObjReg.passwordRepeat) {
+      fetch("/api/register",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(dataObj),
+            body: JSON.stringify(dataObjReg),
           })
           .then((response) => response.json())
           .then((json) => console.log(json))
