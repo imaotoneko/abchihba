@@ -1,0 +1,9 @@
+$color-primary: #74ebd5;
+$color-secondary: #9face6;
+$gradient: linear-gradient(to right, $color-primary, $color-secondary);
+$gradient-hover: linear-gradient(to right, $color-secondary, $color-primary);
+$input-border: #ccc;
+$input-focus: $color-primary;
+$link-color: #74b9ff;
+$link-hover: #0984e3;
+$shadow: 0 8px 24px rgba(0, 0, 0, 0.2);

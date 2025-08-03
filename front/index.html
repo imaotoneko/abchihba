@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Авторизация и Регистрация</title>
+    <link rel="stylesheet" href="./styles/styles.css"/>
+  </head>
+  <body>
+    <div class="auth">
+      <div class="auth__form auth__form--login">
+        <h2 class="form__title">Вход</h2>
+        <form id="loginForm" class="form" data-js-form-log>
+          <div class="form__group">
+            <input
+              type="text"
+              class="form__input"
+              placeholder="Имя пользователя"
+              minlength="3"
+              maxlength="20"
+              name="login"
+              required
+            />
+          </div>
+          <div class="form__group">
+            <input
+              type="password"
+              class="form__input"
+              placeholder="Пароль"
+              minlength="3"
+              maxlength="12"
+              name="password"
+              required
+            />
+          </div>
+          <button type="submit" class="form__button">Войти</button>
+          <p class="form__switch">
+            Нет аккаунта?
+            <a href="#" class="form__link" id="switchToRegister">Регистрация</a>
+          </p>
+        </form>
+      </div>
+
+      <div class="auth__form auth__form--register auth__form--hidden">
+        <h2 class="form__title">Регистрация</h2>
+        <form id="registerForm" class="form" data-js-form-reg>
+          <div class="form__group">
+            <input
+              type="text"
+              class="form__input"
+              placeholder="Имя пользователя"
+              minlength="3"
+              maxlength="20"
+              name="login"
+              required
+            />
+          </div>
+          <div class="form__group">
+            <input
+              type="password"
+              class="form__input"
+              placeholder="Пароль"
+              minlength="3"
+              maxlength="12"
+              name="password"
+              required
+            />
+          </div>
+          <div class="form__group">
+            <input
+              type="password"
+              class="form__input"
+              placeholder="Повторите пароль"
+              minlength="3"
+              maxlength="12"
+              name="passwordRepeat"
+              required
+            />
+          </div>
+          <button type="submit" class="form__button">Зарегистрироваться</button>
+          <p class="form__switch">
+            Уже есть аккаунт?
+            <a href="#" class="form__link" id="switchToLogin">Войти</a>
+          </p>
+        </form>
+      </div>
+    </div>
+    
+    <script src="./scripts/changeForm.js"></script>
+    <script src="./scripts/authForm.js"></script>
+  </body>
+</html>
