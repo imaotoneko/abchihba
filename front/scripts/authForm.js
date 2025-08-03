@@ -13,7 +13,7 @@ class AuthForm {
     const data = new FormData(formLoginElement)
     const dataObj = Object.fromEntries(data)
 
-    fetch("http://localhost:3000",
+    fetch("/api/login",
       {
         method: "POST",
         headers: {
@@ -31,7 +31,7 @@ class AuthForm {
         }
         return response.json()
       })
-      .then((json) => {})
+      .then((json) => {console.log(json)})
       .catch((error) => {
         console.log(error)
       })
@@ -51,8 +51,8 @@ class AuthForm {
             },
             body: JSON.stringify(dataObj),
           })
-          .then((response) => {console.log(response)})
-          .then((json) => {})
+          .then((response) => response.json())
+          .then((json) => console.log(json))
     } else {
       alert('Пароли не сходятся')
     }
