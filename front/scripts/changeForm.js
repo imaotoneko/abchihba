@@ -1,4 +1,4 @@
-class changeForm {
+export class changeForm {
   classes = {
     formHidden: "auth__form--hidden",
   }
@@ -26,5 +26,3 @@ class changeForm {
     }
   }
 }
-
-new changeForm()
