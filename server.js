@@ -1,47 +1,33 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const mysql = require('mysql'); // Модуль для работы с MySQL
-const bcrypt = require('bcryptjs'); // Модуль для хеширования паролей
+const mysql = require('mysql');
+const bcrypt = require('bcryptjs');
+const cors = require('cors');  // Для разрешения CORS
 
 const app = express();
-const PORT = 5500; // Используем один порт для сервера
+const PORT = 5500;  // Один порт для сервера и фронтенда
 
-// --- Настройка подключения к базе данных через Pool ---
+// --- Настройка подключения к базе данных ---
 const db = mysql.createPool({
   connectionLimit: 10,
   host: 'localhost',
-  user: 'nodeuser',  // или admin, если починил
+  user: 'nodeuser',
   password: '1234',
   database: 'queueRegistration'
 });
 
-// --- Маршрут для пинга БД ---
-app.get('/api/ping-db', (req, res) => {
-  db.query('SELECT 1', (err) => {
-    if (err) {
-      console.error('Ошибка подключения к БД:', err);
-      return res.status(500).send('БД недоступна');
-    }
-    console.log('✅ Пинг прошёл: подключение есть');
-    res.send('БД подключена');
-  });
-});
+app.use(cors());  // Для разрешения запросов с фронтенда на том же порту
+app.use(express.static(path.join(__dirname, 'public')));  // Статические файлы фронтенда
+app.use(express.json()); // Для обработки JSON
 
-// --- Middleware ---
-app.use(express.static(path.join(__dirname, 'public')));  // Обслуживаем статические файлы (frontend)
-app.use(express.json()); // Для обработки JSON в запросах
-app.use(express.urlencoded({ extended: true })); // Для обработки urlencoded данных
-
-// --- Маршрут для регистрации пользователя ---
+// --- Маршруты для API ---
 app.post('/api/register', (req, res) => {
   const { login, password } = req.body;
-
   if (!login || !password) {
     return res.status(400).send('Логин и пароль не могут быть пустыми');
   }
 
-  // Хешируем пароль перед сохранением
   bcrypt.hash(password, 10, (err, hashedPassword) => {
     if (err) {
       return res.status(500).send('Ошибка при хешировании пароля');
@@ -56,15 +42,13 @@ app.post('/api/register', (req, res) => {
           return res.status(409).send('Пользователь с таким логином уже существует');
         }
         console.error('Ошибка при добавлении пользователя в БД:', err);
-        return res.status(500).send('Ошибка на стороне сервера при регистрации');
+        return res.status(500).send('Ошибка на сервере');
       }
-      console.log('Пользователь успешно зарегистрирован:', result);
       res.status(201).send({ message: 'Пользователь успешно зарегистрирован' });
     });
   });
 });
 
-// --- Маршрут для логина ---
 app.post('/api/login', (req, res) => {
   const { login, password } = req.body;
 
@@ -75,8 +59,7 @@ app.post('/api/login', (req, res) => {
   const sql = 'SELECT * FROM users WHERE login = ?';
   db.query(sql, [login], (err, results) => {
     if (err) {
-      console.error('Ошибка при запросе пользователя:', err);
-      return res.status(500).send('Ошибка на стороне сервера');
+      return res.status(500).send('Ошибка на сервере');
     }
 
     if (results.length === 0) {
@@ -84,10 +67,8 @@ app.post('/api/login', (req, res) => {
     }
 
     const user = results[0];
-
     bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
-        console.error('Ошибка при сравнении паролей:', err);
         return res.status(500).send('Ошибка при проверке пароля');
       }
 
@@ -95,7 +76,6 @@ app.post('/api/login', (req, res) => {
         return res.status(401).send('Неверный пароль');
       }
 
-      console.log('✅ Авторизация прошла успешно');
       res.status(200).send({ message: 'Авторизация прошла успешно' });
     });
   });
@@ -123,7 +103,7 @@ app.get('/success', (req, res) => {
           }
           h1 {
             font-size: 2rem;
-            color: #4CAF50;  /* Зелёный цвет для успешного входа */
+            color: #4CAF50;
           }
         </style>
       </head>
@@ -132,6 +112,11 @@ app.get('/success', (req, res) => {
       </body>
     </html>
   `);
+});
+
+// --- Маршрут для корня (отдача HTML страницы) ---
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));  // Отправляем фронтенд файл
 });
 
 // --- Запуск сервера ---
