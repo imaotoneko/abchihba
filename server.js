@@ -27,32 +27,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'front', 'index.html'));  // Отправляем файл index.html из папки front
 });
 
-// --- Маршрут для регистрации ---
-app.post('/api/register', (req, res) => {
-  const { login, password } = req.body;
-  if (!login || !password) {
-    return res.status(400).send('Логин и пароль не могут быть пустыми');
-  }
-
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) {
-      return res.status(500).send('Ошибка при хешировании пароля');
-    }
-
-    const newUser = { login, password: hashedPassword };
-    const sql = 'INSERT INTO users SET ?';
-
-    db.query(sql, newUser, (err, result) => {
-      if (err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-          return res.status(409).send('Пользователь с таким логином уже существует');
-        }
-        return res.status(500).send('Ошибка на сервере');
-      }
-      res.status(201).send({ message: 'Пользователь успешно зарегистрирован' });
-    });
-  });
-});
 
 // --- Маршрут для логина ---
 app.post('/api/login', (req, res) => {
