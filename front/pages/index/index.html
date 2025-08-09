@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Авторизация и Регистрация</title>
-    <link rel="stylesheet" href="./styles/styles.css"/>
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <div class="auth">
@@ -86,7 +86,17 @@
       </div>
     </div>
 
-    <script src="./scripts/changeForm.js" type="module"></script>
-    <script src="./scripts/authForm.js" type="module"></script>
+    <!-- Модальное окно -->
+    <div class="modal" id="successModal">
+      <div class="modal__content">
+        <span class="modal__close" id="closeModal">&times;</span>
+        <h2 class="modal__title">Регистрация успешна!</h2>
+        <p class="modal__message">Вы можете войти в свой аккаунт.</p>
+        <button class="modal__button" id="modalOkButton">ОК</button>
+      </div>
+    </div>
+
+    <script src="scripts/changeForm.js" type="module"></script>
+    <script src="scripts/authForm.js" type="module"></script>
   </body>
 </html>

@@ -1,0 +1,192 @@
+$color-primary: #74ebd5;
+$color-secondary: #9face6;
+$gradient: linear-gradient(to right, $color-primary, $color-secondary);
+$gradient-hover: linear-gradient(to right, $color-secondary, $color-primary);
+$input-border: #ccc;
+$input-focus: $color-primary;
+$link-color: #74b9ff;
+$link-hover: #0984e3;
+$shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: $gradient;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1.2s ease;
+}
+
+.auth {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+
+  &__form {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: $shadow;
+    transition: all 0.4s ease;
+    animation: slideUp 0.6s ease;
+
+    &--hidden {
+      display: none;
+    }
+  }
+}
+
+.form {
+  &__title {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+  &__group {
+    margin-bottom: 16px;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid $input-border;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: $input-focus;
+      outline: none;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 12px;
+    background: $gradient;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background: $gradient-hover;
+    }
+  }
+
+  &__switch {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.9em;
+    color: #666;
+  }
+
+  &__link {
+    color: $link-color;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $link-hover;
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    background: #000000;
+  }
+  to {
+    background: $gradient;
+  }
+}
+.modal {
+  display: none; // скрыто по умолчанию
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-in-out;
+
+  &__content {
+    background: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    animation: slideDown 0.3s ease;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #27ae60;
+  }
+
+  &__message {
+    margin-bottom: 15px;
+    color: #555;
+  }
+
+  &__button {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: #219150;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #888;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

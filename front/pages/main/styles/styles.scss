@@ -1,0 +1,263 @@
+$page-padding: 20px;
+$primary-color: #ff4500;
+$secondary-color: #fff3e6;
+$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+.page {
+  font-family: "Arial", sans-serif;
+  background-color: #fdfdfd;
+  color: #333;
+  margin: 0;
+}
+
+.header {
+  background-color: $primary-color;
+  color: white;
+  padding: $page-padding 0;
+  box-shadow: $shadow;
+
+  &__container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 $page-padding;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  &__cart {
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      background: lighten($primary-color, 35%);
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+    }
+
+    &:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 8px rgba(255, 69, 0, 0.2);
+    }
+
+    // Эффект "пульсации" при наведении
+    &:hover::after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      right: -6px;
+      bottom: -6px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 69, 0, 0.5);
+      animation: pulse-border 1s infinite;
+    }
+  }
+
+  @keyframes pulse-border {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.products {
+  max-width: 1200px;
+  margin: auto;
+  padding: $page-padding;
+
+  &__title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+}
+
+.product-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: $shadow;
+  text-align: center;
+  padding-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; // плавные анимации
+
+  &:hover {
+    transform: translateY(-8px); // лёгкий подъём
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); // более глубокая тень
+  }
+
+  &__img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    transition: transform 0.3s ease; // плавное увеличение
+  }
+
+  &:hover &__img {
+    transform: scale(1.05); // чуть увеличить картинку
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+
+  &__price {
+    color: $primary-color;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  &__btn {
+    background: $primary-color;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.2s, transform 0.2s;
+
+    &:hover {
+      background: darken($primary-color, 10%);
+      transform: scale(1.05); // кнопка тоже чуть увеличивается
+    }
+  }
+}
+
+.footer {
+  background: $secondary-color;
+  text-align: center;
+  padding: $page-padding;
+  margin-top: 40px;
+
+  &__text {
+    font-size: 0.9rem;
+    color: #666;
+  }
+}
+
+@media (max-width: 370px) {
+  .header {
+    &__logo {
+      font-size: 1rem;
+    }
+
+    &__cart-text {
+      font-size: 1rem;
+    }
+  }
+}
+
+.cart-modal {
+  display: none; // скрыто по умолчанию
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  &__content {
+    background: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease;
+  }
+
+  &__close {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    &:hover {
+      color: #000;
+    }
+  }
+
+  &__title {
+    margin: 0 0 20px 0;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  &__items {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  &__empty {
+    text-align: center;
+    color: #888;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__checkout {
+    background: $primary-color;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    &:hover {
+      background: darken($primary-color, 10%);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

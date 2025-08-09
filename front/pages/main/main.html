@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ПиццаМаркет</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+  </head>
+  <body class="page">
+    <header class="header">
+      <div class="header__container">
+        <div>
+          <h1 class="header__logo">неДОДОпицца</h1>
+        </div>
+        <!-- Кнопка для открытия корзины -->
+        <div class="header__cart" id="cartBtn">
+          Корзина (<span id="cartCount">0</span>)
+        </div>
+        <!-- Модальное окно корзины -->
+        <div class="cart-modal" id="cartModal">
+          <div class="cart-modal__content">
+            <span class="cart-modal__close" id="closeCart">&times;</span>
+            <h2 class="cart-modal__title">Ваша корзина</h2>
+            <div id="cartItems" class="cart-modal__items">
+              <p class="cart-modal__empty">Корзина пуста</p>
+            </div>
+            <div class="cart-modal__footer">
+              <span id="cartTotal">Итого: 0 ₽</span>
+              <button class="cart-modal__checkout" id="checkoutBtn">
+                Оформить заказ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="products">
+        <h2 class="products__title">Наши пиццы</h2>
+        <div class="products__grid">
+          <!-- 1 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/2.png"
+              alt="Маргарита"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">Маргарита</h3>
+            <p class="product-card__price">450 ₽</p>
+            <button class="product-card__btn" data-id="1">
+              Добавить в корзину
+            </button>
+          </div>
+
+          <!-- 2 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/1.png"
+              alt="Пепперони"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">Пепперони</h3>
+            <p class="product-card__price">500 ₽</p>
+            <button class="product-card__btn" data-id="2">
+              Добавить в корзину
+            </button>
+          </div>
+
+          <!-- 3 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/3.png"
+              alt="Гавайская"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">Гавайская</h3>
+            <p class="product-card__price">550 ₽</p>
+            <button class="product-card__btn" data-id="3">
+              Добавить в корзину
+            </button>
+          </div>
+
+          <!-- 4 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/4.png"
+              alt="4 сыра"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">4 сыра</h3>
+            <p class="product-card__price">600 ₽</p>
+            <button class="product-card__btn" data-id="4">
+              Добавить в корзину
+            </button>
+          </div>
+
+          <!-- 5 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/3.png"
+              alt="Мясная"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">Мясная</h3>
+            <p class="product-card__price">650 ₽</p>
+            <button class="product-card__btn" data-id="5">
+              Добавить в корзину
+            </button>
+          </div>
+
+          <!-- 6 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/2.png"
+              alt="Вегетарианская"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">Вегетарианская</h3>
+            <p class="product-card__price">470 ₽</p>
+            <button class="product-card__btn" data-id="6">
+              Добавить в корзину
+            </button>
+          </div>
+
+          <!-- 7 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/1.png"
+              alt="Барбекю"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">Барбекю</h3>
+            <p class="product-card__price">580 ₽</p>
+            <button class="product-card__btn" data-id="7">
+              Добавить в корзину
+            </button>
+          </div>
+
+          <!-- 8 -->
+          <div class="product-card">
+            <img
+              src="/front/assets/images/4.png"
+              alt="Острая"
+              class="product-card__img"
+            />
+            <h3 class="product-card__title">Острая</h3>
+            <p class="product-card__price">490 ₽</p>
+            <button class="product-card__btn" data-id="8">
+              Добавить в корзину
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__text">© 2025 ПиццаМаркет. Все права защищены.</p>
+    </footer>
+
+    <script src="./scripts/main.js"></script>
+  </body>
+</html>
