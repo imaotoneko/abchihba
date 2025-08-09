@@ -13,7 +13,7 @@ class AuthForm {
     const data = new FormData(formLoginElement)
     const dataObj = Object.fromEntries(data)
 
-    fetch("/api/login",
+    fetch("http://127.0.0.1:3000/api/login",
       {
         method: "POST",
         headers: {
@@ -44,7 +44,7 @@ class AuthForm {
     console.log(dataObjReg)
 
     if (dataObjReg.password === dataObjReg.passwordRepeat) {
-      fetch("/api/register",
+      fetch("http://127.0.0.1:3000/api/register",
           {
             method: "POST",
             headers: {
