@@ -5,7 +5,7 @@ const mysql = require('mysql'); // Модуль для работы с MySQL
 const bcrypt = require('bcryptjs'); // Модуль для хеширования паролей
 
 const app = express();
-const PORT = 3000; // Используем один порт для сервера
+const PORT = 5500; // Используем один порт для сервера
 
 // --- Настройка подключения к базе данных через Pool ---
 const db = mysql.createPool({
