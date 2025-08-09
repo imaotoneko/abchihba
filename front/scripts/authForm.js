@@ -10,7 +10,7 @@ class AuthForm {
 
   // Обработка логина
   submitLogin(event) {
-    event.preventDefault();  // Чтобы форма не перезагружала страницу
+    event.preventDefault(); // Чтобы форма не перезагружала страницу
     const formLoginElement = document.querySelector(this.selectors.loginData);
     const data = new FormData(formLoginElement);
     const dataObj = Object.fromEntries(data);
@@ -25,7 +25,10 @@ class AuthForm {
     })
       .then((response) => {
         if (!response.ok) {
-          const errorMessage = response.status === 404 ? "Неправильный логин" : "Произошла какая-то ошибка";
+          const errorMessage =
+            response.status === 404
+              ? "Неправильный логин"
+              : "Произошла какая-то ошибка";
           throw new Error(errorMessage);
         }
         return response.json();
@@ -33,18 +36,19 @@ class AuthForm {
       .then((json) => {
         console.log(json);
         // Здесь можно добавить действия после успешного входа, например, редирект
-        window.location.href = '/success';  // Пример редиректа
+        window.location.href = "/success"; // Пример редиректа
       })
       .catch((error) => {
-        console.log(error);
-        alert("Ошибка: " + error.message);  // Показать ошибку пользователю
+        console.log(error)
       });
   }
 
   // Обработка регистрации
   submitRegister(event) {
-    event.preventDefault();  // Чтобы форма не перезагружала страницу
-    const formRegisterElement = document.querySelector(this.selectors.registerData);
+    event.preventDefault(); // Чтобы форма не перезагружала страницу
+    const formRegisterElement = document.querySelector(
+      this.selectors.registerData
+    );
     const datas = new FormData(formRegisterElement);
     const dataObjReg = Object.fromEntries(datas);
     console.log(dataObjReg);
@@ -62,12 +66,11 @@ class AuthForm {
           console.log(json);
           if (json.message === "Пользователь успешно зарегистрирован") {
             alert("Регистрация прошла успешно!");
-            window.location.href = '/success';  // Пример редиректа
+            window.location.href = "/success"; // Пример редиректа
           }
         })
         .catch((error) => {
-          console.log(error);
-          alert("Ошибка: " + error.message);
+          console.log(error)
         });
     } else {
       alert("Пароли не сходятся");
