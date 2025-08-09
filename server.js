@@ -1,11 +1,11 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const mysql = require('mysql');
+const mysql = require('mysql2'); 
 const bcrypt = require('bcryptjs');
-const cors = require('cors');  // Для разрешения CORS
+const cors = require('cors');
 
-const app = express();
+const app = express();  
 const PORT = 5500;  // Один порт для сервера и фронтенда
 
 // --- Настройка подключения к базе данных ---
