@@ -88,6 +88,10 @@ app.post('/api/register', (req, res) => {
   });
 });
 
+app.get('/success', (req, res) => {
+  res.sendFile(path.join(__dirname, 'front', 'success.html'));  // Путь к файлу страницы успеха
+});
+
 // --- Запуск сервера ---
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
