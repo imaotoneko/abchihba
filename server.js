@@ -6,7 +6,6 @@ const cors = require('cors');
 
 const app = express();
 const PORT = 5500;  // Один порт для сервера и фронтенда
-const cors = require('cors');
 app.use(cors());
 
 // --- Настройка подключения к базе данных ---
