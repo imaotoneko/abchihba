@@ -6,6 +6,8 @@ const cors = require('cors');
 
 const app = express();
 const PORT = 5500;  // Один порт для сервера и фронтенда
+const cors = require('cors');
+app.use(cors());
 
 // --- Настройка подключения к базе данных ---
 const db = mysql.createPool({
@@ -86,38 +88,6 @@ app.post('/api/login', (req, res) => {
   });
 });
 
-// --- Страница успешного входа ---
-app.get('/success', (req, res) => {
-  res.send(`
-    <!DOCTYPE html>
-    <html lang="ru">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Успешный вход</title>
-        <style>
-          body {
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: #333;
-          }
-          h1 {
-            font-size: 2rem;
-            color: #4CAF50;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>Вы успешно вошли!</h1>
-      </body>
-    </html>
-  `);
-});
 
 // --- Запуск сервера ---
 app.listen(PORT, () => {
