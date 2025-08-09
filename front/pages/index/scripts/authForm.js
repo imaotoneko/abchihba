@@ -8,6 +8,22 @@ class AuthForm {
     this.init();
   }
 
+  showSuccesModal() {
+    const modal = document.getElementById("successModal");
+    const closeBtn = document.getElementById("closeModal");
+    const okBtn = document.getElementById("modalOkButton");
+    modal.style.display = "block";
+
+    closeBtn.onclick = () => (modal.style.display = "none");
+    okBtn.onclick = () => (modal.style.display = "none");
+
+    window.onclick = (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  }
+
   // Обработка логина
   submitLogin(event) {
     event.preventDefault(); // Чтобы форма не перезагружала страницу
@@ -36,10 +52,11 @@ class AuthForm {
       .then((json) => {
         console.log(json);
         // Здесь можно добавить действия после успешного входа, например, редирект
-        window.location.href = "/success"; // Пример редиректа
+        window.location.href =
+          "http://127.0.0.1:5500/front/pages/main/main.html"; // Пример редиректа
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
   }
 
@@ -66,11 +83,11 @@ class AuthForm {
           console.log(json);
           if (json.message === "Пользователь успешно зарегистрирован") {
             alert("Регистрация прошла успешно!");
-            window.location.href = "/success"; // Пример редиректа
+            this.showSuccessModal()
           }
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
         });
     } else {
       alert("Пароли не сходятся");

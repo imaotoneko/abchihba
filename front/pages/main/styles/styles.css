@@ -1,0 +1,229 @@
+.page {
+  font-family: "Arial", sans-serif;
+  background-color: #fdfdfd;
+  color: #333;
+  margin: 0;
+}
+
+.header {
+  background-color: #ff4500;
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.header__container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.header__cart {
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.header__cart:hover {
+  background: rgb(255, 199.2, 178.5);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+}
+.header__cart:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(255, 69, 0, 0.2);
+}
+.header__cart:hover::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 69, 0, 0.5);
+  animation: pulse-border 1s infinite;
+}
+@keyframes pulse-border {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.products {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+.products__title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+.product-card__img {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.product-card:hover .product-card__img {
+  transform: scale(1.05);
+}
+.product-card__title {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+.product-card__price {
+  color: #ff4500;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.product-card__btn {
+  background: #ff4500;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.2s, transform 0.2s;
+}
+.product-card__btn:hover {
+  background: rgb(204, 55.2, 0);
+  transform: scale(1.05);
+}
+
+.footer {
+  background: #fff3e6;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+.footer__text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 370px) {
+  .header__logo {
+    font-size: 1rem;
+  }
+  .header__cart-text {
+    font-size: 1rem;
+  }
+}
+.cart-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.cart-modal__content {
+  background: #fff;
+  margin: 5% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+.cart-modal__close {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+.cart-modal__close:hover {
+  color: #000;
+}
+.cart-modal__title {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.cart-modal__items {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+.cart-modal__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+.cart-modal__empty {
+  text-align: center;
+  color: #888;
+}
+.cart-modal__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-modal__checkout {
+  background: #ff4500;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cart-modal__checkout:hover {
+  background: rgb(204, 55.2, 0);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}/*# sourceMappingURL=styles.css.map */
