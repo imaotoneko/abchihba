@@ -1,4 +1,4 @@
-export class AuthForm {
+class AuthForm {
   selectors = {
     loginData: "[data-js-form-log]",
     registerData: "[data-js-form-reg]",
