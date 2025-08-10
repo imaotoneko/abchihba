@@ -24,7 +24,7 @@ app.use(express.json()); // Для обработки JSON
 
 // --- Маршрут для отдачи HTML страницы ---
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front', 'index.html'));  // Отправляем файл index.html из папки front
+  res.sendFile(path.join(__dirname, 'pages', 'index.html'));  // Указываем путь к index.html
 });
 
 
