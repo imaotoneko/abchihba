@@ -8,10 +8,11 @@ class AuthForm {
     this.init();
   }
 
-  showSuccesModal() {
+  showSuccessModal() {
     const modal = document.getElementById("successModal");
     const closeBtn = document.getElementById("closeModal");
     const okBtn = document.getElementById("modalOkButton");
+
     modal.style.display = "block";
 
     closeBtn.onclick = () => (modal.style.display = "none");
@@ -26,12 +27,11 @@ class AuthForm {
 
   // Обработка логина
   submitLogin(event) {
-    event.preventDefault(); // Чтобы форма не перезагружала страницу
+    event.preventDefault();
     const formLoginElement = document.querySelector(this.selectors.loginData);
     const data = new FormData(formLoginElement);
     const dataObj = Object.fromEntries(data);
 
-    // Отправка запроса на сервер
     fetch("http://localhost:5500/api/login", {
       method: "POST",
       headers: {
@@ -39,78 +39,70 @@ class AuthForm {
       },
       body: JSON.stringify(dataObj),
     })
-      .then((response) => {
+      .then(async (response) => {
+        const json = await response.json();
         if (!response.ok) {
-          const errorMessage =
-            response.status === 404
-              ? "Неправильный логин"
-              : "Произошла какая-то ошибка";
-          throw new Error(errorMessage);
+          throw new Error(json.error || "Ошибка при входе");
         }
-        return response.json();
-      })
-      .then((json) => {
         console.log(json);
-        // Здесь можно добавить действия после успешного входа, например, редирект
-        window.location.href =
-          "http://127.0.0.1:5500/front/pages/main/main.html"; // Пример редиректа
+        // Сохраняем токен
+        localStorage.setItem("token", json.token);
+        window.location.href = "/pages/main/main.html";
       })
       .catch((error) => {
-        console.log(error);
+        alert(error.message);
+        console.error(error);
       });
   }
 
   // Обработка регистрации
   submitRegister(event) {
-    event.preventDefault(); // Чтобы форма не перезагружала страницу
-    const formRegisterElement = document.querySelector(
-      this.selectors.registerData
-    );
+    event.preventDefault();
+    const formRegisterElement = document.querySelector(this.selectors.registerData);
     const datas = new FormData(formRegisterElement);
     const dataObjReg = Object.fromEntries(datas);
-    console.log(dataObjReg);
 
-    if (dataObjReg.password === dataObjReg.passwordRepeat) {
-      fetch("http://localhost:5500/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataObjReg),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          if (json.message === "Пользователь успешно зарегистрирован") {
-            alert("Регистрация прошла успешно!");
-            this.showSuccessModal()
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      alert("Пароли не сходятся");
+    if (dataObjReg.password !== dataObjReg.passwordRepeat) {
+      alert("Пароли не совпадают");
+      return;
     }
+
+    // Отправляем только login и password
+    const payload = {
+      login: dataObjReg.login,
+      password: dataObjReg.password,
+    };
+
+    fetch("http://localhost:5500/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(async (response) => {
+        const json = await response.json();
+        if (!response.ok) {
+          throw new Error(json.error || "Ошибка при регистрации");
+        }
+        console.log(json);
+        this.showSuccessModal();
+      })
+      .catch((error) => {
+        alert(error.message);
+        console.error(error);
+      });
   }
 
-  // Инициализация событий
   init() {
-    // Обработчик для формы логина
     document
       .querySelector(this.selectors.loginData)
-      .addEventListener("submit", (event) => {
-        this.submitLogin(event);
-      });
+      .addEventListener("submit", (event) => this.submitLogin(event));
 
-    // Обработчик для формы регистрации
     document
       .querySelector(this.selectors.registerData)
-      .addEventListener("submit", (event) => {
-        this.submitRegister(event);
-      });
+      .addEventListener("submit", (event) => this.submitRegister(event));
   }
 }
 
-// Инициализация формы
 new AuthForm();
